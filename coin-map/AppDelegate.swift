@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  btc-map
+//  coin-map
 //
 //  Created by Marat Saytakov on 16.11.2019.
 //  Copyright © 2019 saytakov. All rights reserved.
