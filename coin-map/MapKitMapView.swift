@@ -9,6 +9,30 @@
 import SwiftUI
 import MapKit
 
+class UndetailedPointAnnotation: MKPointAnnotation {
+
+  /// Wouldn't be shown on the map, but would be provided as data.
+  let hiddenSubtitle: String
+
+  let phone, website, hours: String
+
+  init(_ coo: CLLocationCoordinate2D,
+       title: String, subtitle: String,
+       phone: String, website: String, hours: String) {
+
+    self.hiddenSubtitle = subtitle
+
+    self.phone = phone
+    self.website = website
+    self.hours = hours
+
+    super.init()
+
+    self.title = title
+    self.coordinate = coo
+  }
+}
+
 class MapKitMapViewController: UIViewController {
 
   var delegate: MKMapViewDelegate!
@@ -35,6 +59,8 @@ class MapKitMapViewController: UIViewController {
 
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+
+    map?.delegate = delegate
 
     setupLocationButton()
   }
@@ -71,11 +97,19 @@ class MapKitMapViewController: UIViewController {
 
         debugPrint(places.count)
 
-        let annotations = places.map { (p) -> MKPointAnnotation in
+        let annotations = places.compactMap { (p) -> UndetailedPointAnnotation? in
+          guard p.visible else {
+            return nil
+          }
+
           let coordinate = CLLocationCoordinate2D(latitude: p.latitude, longitude: p.longitude)
 
-          return MKPointAnnotation(__coordinate: coordinate,
-                                   title: p.name, subtitle: p.description)
+          return UndetailedPointAnnotation(coordinate,
+                                           title: p.name,
+                                           subtitle: p.description,
+                                           phone: p.phone,
+                                           website: p.website,
+                                           hours: p.openingHours)
         }
 
         DispatchQueue.main.async {
@@ -97,12 +131,18 @@ class MapKitMapViewController: UIViewController {
 
 struct MapKitMapView: UIViewControllerRepresentable {
 
+  @Binding var selected: Bool
+  @Binding var title: String
+  @Binding var subtitle: String
+  @Binding var phone: String
+  @Binding var website: String
+  @Binding var hours: String
+
   func makeCoordinator() -> Coordinator {
     return Coordinator(self)
   }
 
   func makeUIViewController(context: UIViewControllerRepresentableContext<MapKitMapView>) -> MapKitMapViewController {
-
     let mkmpvc = MapKitMapViewController()
     mkmpvc.delegate = context.coordinator
     return mkmpvc
@@ -113,6 +153,7 @@ struct MapKitMapView: UIViewControllerRepresentable {
   }
 
   class Coordinator: NSObject, MKMapViewDelegate {
+
     var parent: MapKitMapView
 
     init(_ c: MapKitMapView) {
@@ -122,8 +163,27 @@ struct MapKitMapView: UIViewControllerRepresentable {
     }
 
     func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-      debugPrint(mapView.region)
+
+    }
+
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+      guard let a = view.annotation as? UndetailedPointAnnotation else {
+        return
+      }
+
+      parent.selected = true
+      parent.title = a.title ?? ""
+      parent.subtitle = a.hiddenSubtitle
+
+      parent.phone = a.phone
+      parent.website = a.website
+      parent.hours = a.hours
+    }
+
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+      parent.selected = false
     }
 
   }
+
 }
