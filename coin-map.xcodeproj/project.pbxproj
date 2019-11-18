@@ -19,7 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		030F35EC238018910014F857 /* Coin Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Coin Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		030F35EC238018910014F857 /* coin-map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "coin-map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		030F35EF238018910014F857 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		030F35F1238018910014F857 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		030F35F3238018910014F857 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -55,7 +55,7 @@
 		030F35ED238018910014F857 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				030F35EC238018910014F857 /* Coin Map.app */,
+				030F35EC238018910014F857 /* coin-map.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,7 +103,7 @@
 			);
 			name = "coin-map";
 			productName = "btc-map";
-			productReference = 030F35EC238018910014F857 /* Coin Map.app */;
+			productReference = 030F35EC238018910014F857 /* coin-map.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -310,7 +310,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.saytakov.coin-map";
-				PRODUCT_NAME = "Coin Map";
+				PRODUCT_NAME = "coin-map";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -333,7 +333,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.saytakov.coin-map";
-				PRODUCT_NAME = "Coin Map";
+				PRODUCT_NAME = "coin-map";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
