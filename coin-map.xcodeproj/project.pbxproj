@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		030B991A2382896200D27A0E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 030B99192382896200D27A0E /* MapKit.framework */; };
 		030F35F0238018910014F857 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030F35EF238018910014F857 /* AppDelegate.swift */; };
 		030F35F2238018910014F857 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030F35F1238018910014F857 /* SceneDelegate.swift */; };
 		030F35F4238018910014F857 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030F35F3238018910014F857 /* ContentView.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		030B99192382896200D27A0E /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		030F35EC238018910014F857 /* coin-map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "coin-map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		030F35EF238018910014F857 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		030F35F1238018910014F857 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -38,17 +40,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				030B991A2382896200D27A0E /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		030B99182382896200D27A0E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				030B99192382896200D27A0E /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		030F35E3238018910014F857 = {
 			isa = PBXGroup;
 			children = (
 				030F35EE238018910014F857 /* coin-map */,
 				030F35ED238018910014F857 /* Products */,
+				030B99182382896200D27A0E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -299,7 +311,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "coin-map/coin-map.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"coin-map/Preview Content\"";
 				DEVELOPMENT_TEAM = Y5P7AX9UM2;
@@ -322,7 +336,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "coin-map/coin-map.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"coin-map/Preview Content\"";
 				DEVELOPMENT_TEAM = Y5P7AX9UM2;
