@@ -14,11 +14,12 @@
 		030F35F9238018930014F857 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 030F35F8238018930014F857 /* Preview Assets.xcassets */; };
 		030F35FC238018930014F857 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 030F35FA238018930014F857 /* LaunchScreen.storyboard */; };
 		030F360423801C740014F857 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030F360323801C740014F857 /* API.swift */; };
+		03B197F72382547F00FE25F5 /* places.json in Resources */ = {isa = PBXBuildFile; fileRef = 03B197F62382547E00FE25F5 /* places.json */; };
 		03C002EB23802AB3001339A5 /* MapKitMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C002EA23802AB3001339A5 /* MapKitMapView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		030F35EC238018910014F857 /* coin-map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "coin-map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		030F35EC238018910014F857 /* Coin Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Coin Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		030F35EF238018910014F857 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		030F35F1238018910014F857 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		030F35F3238018910014F857 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -27,6 +28,8 @@
 		030F35FB238018930014F857 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		030F35FD238018930014F857 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		030F360323801C740014F857 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		03B197F62382547E00FE25F5 /* places.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = places.json; sourceTree = SOURCE_ROOT; };
+		03B197F82382642100FE25F5 /* coin-map.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "coin-map.entitlements"; sourceTree = "<group>"; };
 		03C002EA23802AB3001339A5 /* MapKitMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitMapView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -52,7 +55,7 @@
 		030F35ED238018910014F857 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				030F35EC238018910014F857 /* coin-map.app */,
+				030F35EC238018910014F857 /* Coin Map.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,11 +63,13 @@
 		030F35EE238018910014F857 /* coin-map */ = {
 			isa = PBXGroup;
 			children = (
+				03B197F82382642100FE25F5 /* coin-map.entitlements */,
 				030F35EF238018910014F857 /* AppDelegate.swift */,
 				030F35F1238018910014F857 /* SceneDelegate.swift */,
 				030F35F3238018910014F857 /* ContentView.swift */,
 				03C002EA23802AB3001339A5 /* MapKitMapView.swift */,
 				030F360323801C740014F857 /* API.swift */,
+				03B197F62382547E00FE25F5 /* places.json */,
 				030F35F5238018930014F857 /* Assets.xcassets */,
 				030F35FA238018930014F857 /* LaunchScreen.storyboard */,
 				030F35FD238018930014F857 /* Info.plist */,
@@ -98,7 +103,7 @@
 			);
 			name = "coin-map";
 			productName = "btc-map";
-			productReference = 030F35EC238018910014F857 /* coin-map.app */;
+			productReference = 030F35EC238018910014F857 /* Coin Map.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -142,6 +147,7 @@
 				030F35FC238018930014F857 /* LaunchScreen.storyboard in Resources */,
 				030F35F9238018930014F857 /* Preview Assets.xcassets in Resources */,
 				030F35F6238018930014F857 /* Assets.xcassets in Resources */,
+				03B197F72382547F00FE25F5 /* places.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,8 +298,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "coin-map/coin-map.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"coin-map/Preview Content\"";
+				DEVELOPMENT_TEAM = Y5P7AX9UM2;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "coin-map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -301,7 +310,8 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.saytakov.coin-map";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Coin Map";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -311,8 +321,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "coin-map/coin-map.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"coin-map/Preview Content\"";
+				DEVELOPMENT_TEAM = Y5P7AX9UM2;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "coin-map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -320,7 +333,8 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.saytakov.coin-map";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Coin Map";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

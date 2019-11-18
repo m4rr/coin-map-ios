@@ -8,31 +8,17 @@
 
 import Foundation
 
-
-class User: Codable {
-  let id: String,
-  email: String,
-  emailConfirmed: Bool,
-  firstName: String,
-  lastName: String,
-  avatarUrl: String,
-  createdAt: Date,
-  updatedAt: Date
-}
-
-class TokenResponse: Codable {
-  let token: String, user: User
-}
-
-
-
-class UserResponse: Codable {
-  let id: String,
-  email: String,
-  emailConfirmed: Bool,
-  firstName: String,
-  lastName: String,
-  avatarUrl: String,
-  createdAt: Date,
-  updatedAt: Date
+class Place: Codable {
+    let id: String,
+    name: String,
+    latitude: Double,
+    longitude: Double,
+    categoryId: String,
+    description: String,
+    phone: String,
+    website: String,
+    openingHours: String,
+    visible: Bool
+//  , createdAt: Date
+//  , updatedAt: Date
 }
