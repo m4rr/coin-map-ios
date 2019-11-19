@@ -38,12 +38,14 @@ struct ContentView: View {
             Text(selectedTitle)
               .font(.headline)
               .frame(minWidth: 0, maxWidth: .infinity)
+              .foregroundColor(Color(UIColor.label))
 
             Divider()
 
             if !selectedSubtitle.isEmpty {
               Text(selectedSubtitle)
                 .font(.subheadline)
+                .foregroundColor(Color(UIColor.label))
             }
 
             if !selectedPhone.isEmpty {
@@ -53,18 +55,19 @@ struct ContentView: View {
                 Text(selectedPhone)
               })
                 .actionSheet(isPresented: $alert1) {
-                  ActionSheet(title: Text("Call Number"),
-                              message: Text(self.selectedPhone),
-                              buttons: [
-                                Alert.Button.default(Text("Call")) {
-                                  if let phone = URL(string: "tel:" + self.selectedPhone.trimmingCharacters(in: .whitespaces)) {
-                                    UIApplication.shared.open(phone, options: [:], completionHandler: nil)
-                                  }
-                                },
-                                Alert.Button.default(Text("Copy")) {
-                                  UIPasteboard.general.string = self.selectedPhone
-                                },
-                                Alert.Button.cancel(),
+                  ActionSheet(
+                    title: Text("Call Number"),
+                    message: Text(self.selectedPhone),
+                    buttons: [
+                      Alert.Button.default(Text("Call")) {
+                        if let phone = URL(string: "tel:" + self.selectedPhone.trimmingCharacters(in: .whitespaces)) {
+                          UIApplication.shared.open(phone, options: [:], completionHandler: nil)
+                        }
+                      },
+                      Alert.Button.default(Text("Copy")) {
+                        UIPasteboard.general.string = self.selectedPhone
+                      },
+                      Alert.Button.cancel(),
                     ]
                   )
               }
@@ -77,18 +80,19 @@ struct ContentView: View {
                 Text(selectedWebsite)
               })
                 .actionSheet(isPresented: $alert2) {
-                  ActionSheet(title: Text("Open In Safari"),
-                              message: Text(self.selectedWebsite),
-                              buttons: [
-                                Alert.Button.default(Text("Open"), action: {
-                                  if let url = URL(string: self.selectedWebsite) {
-                                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                                  }
-                                }),
-                                Alert.Button.default(Text("Copy")) {
-                                  UIPasteboard.general.string = self.selectedWebsite
-                                },
-                                Alert.Button.cancel(),
+                  ActionSheet(
+                    title: Text("Open In Safari"),
+                    message: Text(self.selectedWebsite),
+                    buttons: [
+                      Alert.Button.default(Text("Open"), action: {
+                        if let url = URL(string: self.selectedWebsite) {
+                          UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        }
+                      }),
+                      Alert.Button.default(Text("Copy")) {
+                        UIPasteboard.general.string = self.selectedWebsite
+                      },
+                      Alert.Button.cancel(),
                     ]
                   )
               }
@@ -96,11 +100,17 @@ struct ContentView: View {
 
             if !selectedHours.isEmpty {
               Text(selectedHours)
+                .foregroundColor(Color(UIColor.label))
+
             }
           }
           .padding()
-          .background(Color.white)
+          .background(Color(UIColor.systemBackground))
           .cornerRadius(10)
+          .transition(AnyTransition
+            .opacity
+            .animation(.easeOut(duration: 0.2))
+          )
         }
       }
       .padding([.top, .leading, .trailing])
