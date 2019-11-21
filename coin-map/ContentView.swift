@@ -51,19 +51,10 @@ struct ContentView: View {
             }
 
             if !selectedSubtitle.isEmpty {
-              VStack {
-                HStack {
-                  Spacer()
-                }
-
-                Text(selectedSubtitle)
-                  .font(.subheadline)
-                  .foregroundColor(Color(UIColor.label))
-
-                HStack {
-                  Spacer()
-                }
-              }
+              Text(selectedSubtitle)
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .font(.subheadline)
+                .foregroundColor(Color(UIColor.label))
             }
 
             if !selectedPhone.isEmpty {
