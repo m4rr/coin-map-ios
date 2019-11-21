@@ -17,6 +17,8 @@ struct ContentView: View {
   @State private var selectedWebsite: String = ""
   @State private var selectedHours: String = ""
 
+  @State private var selectedCurrency: [Currency] = []
+
   @State private var alert1: Bool = false
   @State private var alert2: Bool = false
 
@@ -27,7 +29,8 @@ struct ContentView: View {
                     subtitle: $selectedSubtitle,
                     phone: $selectedPhone,
                     website: $selectedWebsite,
-                    hours: $selectedHours)
+                    hours: $selectedHours,
+                    placeCurrencies: $selectedCurrency)
         .edgesIgnoringSafeArea(.all)
 
       VStack {
@@ -36,16 +39,31 @@ struct ContentView: View {
         if selected {
           VStack(spacing: 8) {
             Text(selectedTitle)
-              .font(.headline)
+              .font(.system(.headline, design: .rounded))
               .frame(minWidth: 0, maxWidth: .infinity)
               .foregroundColor(Color(UIColor.label))
 
             Divider()
 
+            if !selectedCurrency.isEmpty {
+              Text(selectedCurrency.description)
+                .font(.system(.footnote, design: .monospaced))
+            }
+
             if !selectedSubtitle.isEmpty {
-              Text(selectedSubtitle)
-                .font(.subheadline)
-                .foregroundColor(Color(UIColor.label))
+              VStack {
+                HStack {
+                  Spacer()
+                }
+
+                Text(selectedSubtitle)
+                  .font(.subheadline)
+                  .foregroundColor(Color(UIColor.label))
+
+                HStack {
+                  Spacer()
+                }
+              }
             }
 
             if !selectedPhone.isEmpty {

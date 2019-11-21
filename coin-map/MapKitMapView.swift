@@ -14,17 +14,19 @@ class UndetailedPointAnnotation: MKPointAnnotation {
   /// Wouldn't be shown on the map, but would be provided as data.
   let hiddenSubtitle: String
 
-  let phone, website, hours: String
+  let phone, website, hours, placeID: String
 
   init(_ coo: CLLocationCoordinate2D,
        title: String, subtitle: String,
-       phone: String, website: String, hours: String) {
+       phone: String, website: String, hours: String,
+       placeID: String) {
 
     self.hiddenSubtitle = subtitle
 
     self.phone = phone
     self.website = website
     self.hours = hours
+    self.placeID = placeID
 
     super.init()
 
@@ -35,7 +37,7 @@ class UndetailedPointAnnotation: MKPointAnnotation {
 
 class MapKitMapViewController: UIViewController {
 
-  var delegate: MKMapViewDelegate!
+  var coordinator: MapKitMapView.Coordinator!
 
   var places: [MKPointAnnotation] = [] {
     didSet {
@@ -44,6 +46,18 @@ class MapKitMapViewController: UIViewController {
       }
 
       map?.addAnnotations(places)
+    }
+  }
+
+  var currencies: [Currency] = [] {
+    didSet {
+      //
+    }
+  }
+
+  var currencies_places: [CurrencyPlace] = [] {
+    didSet {
+      //
     }
   }
 
@@ -60,7 +74,7 @@ class MapKitMapViewController: UIViewController {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
 
-    map?.delegate = delegate
+    map?.delegate = coordinator
 
     setupLocationButton()
   }
@@ -85,38 +99,66 @@ class MapKitMapViewController: UIViewController {
     //    button.layer.cornerRadius = button.bounds.midY
   }
 
-  private func loadPlaces() {
-    guard let placesDataFileURL = Bundle.main.url(forResource: "places", withExtension: "json") else {
-      return
+  private func loadCurrencies() {
+    DispatchQueue.global().async {
+      let curs: [Currency] = self.loadItems(filename: "currencies")
+
+      DispatchQueue.main.async {
+        self.currencies = curs
+      }
     }
 
     DispatchQueue.global().async {
-      do {
-        let data = try Data(contentsOf: placesDataFileURL)
-        let places = try JSONDecoder().decode([Place].self, from: data)
+      let curplcs: [CurrencyPlace] = self.loadItems(filename: "currencies_places")
 
-        debugPrint(places.count)
+      DispatchQueue.main.async {
+        self.currencies_places = curplcs
+      }
+    }
+  }
 
-        let annotations = places.compactMap { (p) -> UndetailedPointAnnotation? in
-          guard p.visible else {
-            return nil
-          }
+  private func loadItems<T: Codable>(filename: String) -> [T] {
+    guard let placesDataFileURL = Bundle.main.url(forResource: filename, withExtension: "json") else {
+      return []
+    }
 
-          let coordinate = CLLocationCoordinate2D(latitude: p.latitude, longitude: p.longitude)
+    do {
+      let data = try Data(contentsOf: placesDataFileURL)
+      let items = try JSONDecoder().decode([T].self, from: data)
 
-          return UndetailedPointAnnotation(coordinate,
-                                           title: p.name,
-                                           subtitle: p.description,
-                                           phone: p.phone,
-                                           website: p.website,
-                                           hours: p.openingHours)
+      debugPrint(items.count)
+
+      return items
+
+    } catch {
+      debugPrint(error)
+
+      return []
+    }
+  }
+
+  private func loadPlaces() {
+    DispatchQueue.global().async {
+      let places: [Place] = self.loadItems(filename: "places")
+
+      let annotations = places.compactMap { (place) -> UndetailedPointAnnotation? in
+        guard place.visible else {
+          return nil
         }
 
-        DispatchQueue.main.async {
-          self.places = annotations
-        }
-      } catch {
-        debugPrint(error)
+        let coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
+
+        return UndetailedPointAnnotation(coordinate,
+                                         title: place.name,
+                                         subtitle: place.description,
+                                         phone: place.phone,
+                                         website: place.website,
+                                         hours: place.openingHours,
+                                         placeID: place.id)
+      }
+
+      DispatchQueue.main.async {
+        self.places = annotations
       }
     }
   }
@@ -125,6 +167,7 @@ class MapKitMapViewController: UIViewController {
     super.viewDidLoad()
 
     loadPlaces()
+    loadCurrencies()
   }
 
 }
@@ -138,13 +181,17 @@ struct MapKitMapView: UIViewControllerRepresentable {
   @Binding var website: String
   @Binding var hours: String
 
+  @Binding var placeCurrencies: [Currency]
+
   func makeCoordinator() -> Coordinator {
     return Coordinator(self)
   }
 
+
   func makeUIViewController(context: UIViewControllerRepresentableContext<MapKitMapView>) -> MapKitMapViewController {
     let mkmpvc = MapKitMapViewController()
-    mkmpvc.delegate = context.coordinator
+    mkmpvc.coordinator = context.coordinator
+    context.coordinator.controller = mkmpvc
     return mkmpvc
   }
 
@@ -155,6 +202,7 @@ struct MapKitMapView: UIViewControllerRepresentable {
   class Coordinator: NSObject, MKMapViewDelegate {
 
     var parent: MapKitMapView
+    weak var controller: MapKitMapViewController?
 
     init(_ c: MapKitMapView) {
       parent = c
@@ -167,17 +215,35 @@ struct MapKitMapView: UIViewControllerRepresentable {
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-      guard let a = view.annotation as? UndetailedPointAnnotation else {
+      guard let placeAnno = view.annotation as? UndetailedPointAnnotation else {
         return
       }
 
       parent.selected = true
-      parent.title = a.title ?? ""
-      parent.subtitle = a.hiddenSubtitle
+      parent.title = placeAnno.title ?? ""
+      parent.subtitle = placeAnno.hiddenSubtitle
 
-      parent.phone = a.phone
-      parent.website = a.website
-      parent.hours = a.hours
+      parent.phone = placeAnno.phone
+      parent.website = placeAnno.website
+      parent.hours = placeAnno.hours
+
+      guard let controller = controller else { return }
+
+
+      let curplcPairsForThisPlace = controller.currencies_places
+        .filter({ (cp) -> Bool in
+          cp.placeId == placeAnno.placeID
+        })
+
+
+
+      let curs = curplcPairsForThisPlace.flatMap({ cp in
+        controller.currencies.filter { (c) -> Bool in
+          c.id == cp.currencyId
+        }
+      })
+
+      parent.placeCurrencies = curs
     }
 
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
