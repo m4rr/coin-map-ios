@@ -24,13 +24,13 @@ struct ContentView: View {
 
   var body: some View {
     ZStack {
-      MapKitMapView(selected: $selected,
-                    title: $selectedTitle,
-                    subtitle: $selectedSubtitle,
-                    phone: $selectedPhone,
-                    website: $selectedWebsite,
-                    hours: $selectedHours,
-                    placeCurrencies: $selectedCurrency)
+      MapRepresentable(selected: $selected,
+                       title: $selectedTitle,
+                       subtitle: $selectedSubtitle,
+                       phone: $selectedPhone,
+                       website: $selectedWebsite,
+                       hours: $selectedHours,
+                       placeCurrencies: $selectedCurrency)
         .edgesIgnoringSafeArea(.all)
 
       VStack {

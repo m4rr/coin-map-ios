@@ -1,5 +1,5 @@
 //
-//  MapKitMapViewController.swift
+//  MapViewController.swift
 //  coin-map
 //
 //  Created by Marat Saytakov on 21.11.2019.
@@ -9,9 +9,9 @@
 import SwiftUI
 import MapKit
 
-class MapKitMapViewController: UIViewController {
+class MapViewController: UIViewController {
 
-  init(coordinator: MapKitMapView.Coordinator) {
+  init(coordinator: MapRepresentable.Coordinator) {
     self.coordinator = coordinator
 
     super.init(nibName: nil, bundle: nil)
@@ -23,7 +23,7 @@ class MapKitMapViewController: UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
 
-  var coordinator: MapKitMapView.Coordinator
+  var coordinator: MapRepresentable.Coordinator
 
   var places: [MKAnnotation] = [] {
     didSet {
@@ -55,26 +55,6 @@ class MapKitMapViewController: UIViewController {
 
   var map: MKMapView? {
     return view as? MKMapView
-  }
-
-  private func setupLocationButton() {
-    return;
-
-    //    let button = MKUserTrackingButton(mapView: map)
-    //    button.layer.backgroundColor = UIColor.white.cgColor
-    //    button.layer.borderColor = UIColor.blue.cgColor
-    //    button.layer.borderWidth = 1
-    //    button.tintColor = .black
-
-    //    map.addSubview(button)
-    //
-    //    button.translatesAutoresizingMaskIntoConstraints = false
-    //    button.bottomAnchor.constraint(equalTo: map.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-    //    button.centerXAnchor.constraint(equalTo: map.centerXAnchor).isActive = true
-    //
-    //    button.setNeedsLayout()
-    //
-    //    button.layer.cornerRadius = button.bounds.midY
   }
 
   private func loadCurrencies() {
@@ -120,20 +100,20 @@ class MapKitMapViewController: UIViewController {
     DispatchQueue.global().async {
       let places: [Place] = self.loadItems(filename: "places")
 
-      let annotations = places.compactMap { (place) -> UndetailedPointAnnotation? in
+      let annotations = places.compactMap { (place) -> UndetailedAnnotation? in
         guard place.visible else {
           return nil
         }
 
         let coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
 
-        return UndetailedPointAnnotation(coordinate,
-                                         title: place.name,
-                                         subtitle: place.description,
-                                         phone: place.phone,
-                                         website: place.website,
-                                         hours: place.openingHours,
-                                         placeID: place.id)
+        return UndetailedAnnotation(coordinate,
+                                    title: place.name,
+                                    subtitle: place.description,
+                                    phone: place.phone,
+                                    website: place.website,
+                                    hours: place.openingHours,
+                                    placeID: place.id)
       }
 
       DispatchQueue.main.async {
@@ -148,19 +128,16 @@ class MapKitMapViewController: UIViewController {
     map?.delegate = coordinator
     map?.mapType = .mutedStandard
 
-    setupLocationButton()
+    registerAnnotationViewClasses()
+
     loadPlaces()
     loadCurrencies()
-
-    registerAnnotationViewClasses()
   }
 
   private func registerAnnotationViewClasses() {
-    //        mapView.register(UnicycleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-    //        mapView.register(BicycleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
     map?.register(BubbleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-    map?.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
-
+    
+//    map?.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
   }
 
 }

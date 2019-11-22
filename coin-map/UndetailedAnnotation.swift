@@ -1,5 +1,5 @@
 //
-//  UndetailedPointAnnotation.swift
+//  UndetailedAnnotation.swift
 //  coin-map
 //
 //  Created by Marat Saytakov on 21.11.2019.
@@ -22,7 +22,7 @@ class BubbleAnnotationView: MKMarkerAnnotationView {
 
 }
 
-class UndetailedPointAnnotation: NSObject, MKAnnotation {
+class UndetailedAnnotation: NSObject, MKAnnotation {
 
   let title, subtitle: String?
   let coordinate: CLLocationCoordinate2D
@@ -49,7 +49,6 @@ class UndetailedPointAnnotation: NSObject, MKAnnotation {
     self.coordinate = coo
 
     super.init()
-
   }
 
 }

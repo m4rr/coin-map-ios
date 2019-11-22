@@ -9,7 +9,7 @@
 import SwiftUI
 import MapKit
 
-struct MapKitMapView: UIViewControllerRepresentable {
+struct MapRepresentable: UIViewControllerRepresentable {
 
   @Binding var selected: Bool
   @Binding var title: String
@@ -24,20 +24,24 @@ struct MapKitMapView: UIViewControllerRepresentable {
     return Coordinator(self)
   }
 
-  func makeUIViewController(context: UIViewControllerRepresentableContext<MapKitMapView>) -> MapKitMapViewController {
-    return MapKitMapViewController(coordinator: context.coordinator)
+  func makeUIViewController(context: UIViewControllerRepresentableContext<MapRepresentable>) -> MapViewController {
+    return MapViewController(coordinator: context.coordinator)
   }
 
-  func updateUIViewController(_ uiViewController: MapKitMapViewController, context: UIViewControllerRepresentableContext<MapKitMapView>) {
+  func updateUIViewController(_ uiViewController: MapViewController, context: UIViewControllerRepresentableContext<MapRepresentable>) {
     //
   }
 
+}
+
+extension MapRepresentable {
+
   class Coordinator: NSObject, MKMapViewDelegate {
 
-    var parent: MapKitMapView
-    weak var controller: MapKitMapViewController?
+    var parent: MapRepresentable
+    weak var controller: MapViewController?
 
-    init(_ parent: MapKitMapView) {
+    init(_ parent: MapRepresentable) {
       self.parent = parent
 
       super.init()
@@ -48,20 +52,25 @@ struct MapKitMapView: UIViewControllerRepresentable {
 //      return ClusterAnnotation(memberAnnotations: memberAnnotations)
 //    }
 
+
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-      if annotation is ClusterAnnotation {
-        return ClusterAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
-      } else if annotation is UndetailedPointAnnotation 
+      var a: MKAnnotationView?
+
+      if annotation is MKClusterAnnotation {
+//        a = ClusterAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+        a = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier, for: annotation)
+      } else  {
+        a = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier, for: annotation)
+      }
+
+      return a
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-      guard let placeAnno = view.annotation as? UndetailedPointAnnotation else {
+      guard let placeAnno = view.annotation as? UndetailedAnnotation else {
         return
       }
 
-//      placeAnno.iden
-
-      parent.selected = true
       parent.title = placeAnno.title ?? ""
       parent.subtitle = placeAnno.hiddenSubtitle
 
@@ -86,6 +95,8 @@ struct MapKitMapView: UIViewControllerRepresentable {
       })
 
       parent.placeCurrencies = curs
+
+      parent.selected = true
     }
 
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
