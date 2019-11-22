@@ -15,6 +15,10 @@
 		030F35F9238018930014F857 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 030F35F8238018930014F857 /* Preview Assets.xcassets */; };
 		030F35FC238018930014F857 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 030F35FA238018930014F857 /* LaunchScreen.storyboard */; };
 		030F360423801C740014F857 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030F360323801C740014F857 /* API.swift */; };
+		037B244E238682F200C404B7 /* ClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037B244D238682F200C404B7 /* ClusterAnnotationView.swift */; };
+		037B24502386830800C404B7 /* UIColor+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037B244F2386830800C404B7 /* UIColor+Theme.swift */; };
+		037B245223868F5400C404B7 /* MapKitMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037B245123868F5400C404B7 /* MapKitMapViewController.swift */; };
+		037B245423868F7500C404B7 /* UndetailedPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037B245323868F7500C404B7 /* UndetailedPointAnnotation.swift */; };
 		03AC067323864AB50017D8F0 /* currencies.json in Resources */ = {isa = PBXBuildFile; fileRef = 03AC067123864AB50017D8F0 /* currencies.json */; };
 		03AC067423864AB50017D8F0 /* currencies_places.json in Resources */ = {isa = PBXBuildFile; fileRef = 03AC067223864AB50017D8F0 /* currencies_places.json */; };
 		03B197F72382547F00FE25F5 /* places.json in Resources */ = {isa = PBXBuildFile; fileRef = 03B197F62382547E00FE25F5 /* places.json */; };
@@ -32,6 +36,10 @@
 		030F35FB238018930014F857 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		030F35FD238018930014F857 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		030F360323801C740014F857 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		037B244D238682F200C404B7 /* ClusterAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClusterAnnotationView.swift; sourceTree = "<group>"; };
+		037B244F2386830800C404B7 /* UIColor+Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Theme.swift"; sourceTree = "<group>"; };
+		037B245123868F5400C404B7 /* MapKitMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitMapViewController.swift; sourceTree = "<group>"; };
+		037B245323868F7500C404B7 /* UndetailedPointAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndetailedPointAnnotation.swift; sourceTree = "<group>"; };
 		03AC067123864AB50017D8F0 /* currencies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = currencies.json; sourceTree = SOURCE_ROOT; };
 		03AC067223864AB50017D8F0 /* currencies_places.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = currencies_places.json; sourceTree = SOURCE_ROOT; };
 		03B197F62382547E00FE25F5 /* places.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = places.json; sourceTree = SOURCE_ROOT; };
@@ -84,10 +92,14 @@
 				030F35F1238018910014F857 /* SceneDelegate.swift */,
 				030F35F3238018910014F857 /* ContentView.swift */,
 				03C002EA23802AB3001339A5 /* MapKitMapView.swift */,
+				037B245123868F5400C404B7 /* MapKitMapViewController.swift */,
+				037B245323868F7500C404B7 /* UndetailedPointAnnotation.swift */,
+				037B244D238682F200C404B7 /* ClusterAnnotationView.swift */,
 				030F360323801C740014F857 /* API.swift */,
 				03B197F62382547E00FE25F5 /* places.json */,
 				03AC067223864AB50017D8F0 /* currencies_places.json */,
 				03AC067123864AB50017D8F0 /* currencies.json */,
+				037B244F2386830800C404B7 /* UIColor+Theme.swift */,
 				030F35F5238018930014F857 /* Assets.xcassets */,
 				030F35FA238018930014F857 /* LaunchScreen.storyboard */,
 				030F35FD238018930014F857 /* Info.plist */,
@@ -181,7 +193,11 @@
 				030F35F0238018910014F857 /* AppDelegate.swift in Sources */,
 				03C002EB23802AB3001339A5 /* MapKitMapView.swift in Sources */,
 				030F35F2238018910014F857 /* SceneDelegate.swift in Sources */,
+				037B245223868F5400C404B7 /* MapKitMapViewController.swift in Sources */,
 				030F360423801C740014F857 /* API.swift in Sources */,
+				037B244E238682F200C404B7 /* ClusterAnnotationView.swift in Sources */,
+				037B245423868F7500C404B7 /* UndetailedPointAnnotation.swift in Sources */,
+				037B24502386830800C404B7 /* UIColor+Theme.swift in Sources */,
 				030F35F4238018910014F857 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
