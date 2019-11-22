@@ -47,7 +47,6 @@ class MapViewController: UIViewController {
     }
   }
 
-
   func currenciesFor(placeID: String) -> [Currency] {
     let curplcPairsForThisPlace = currencies_places
       .filter({ (cp) -> Bool in
@@ -144,22 +143,22 @@ class MapViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    registerAnnotationViewClasses()
 
     mapView?.delegate = coordinator
     mapView?.mapType = .mutedStandard
 
-    registerAnnotationViewClasses()
 
     loadCurrencies()
     loadPlaces()
-
-
   }
 
   private func registerAnnotationViewClasses() {
-    mapView?.register(BubbleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+    mapView?.register(BubbleAnnotationView.self,
+                      forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
     
-//    mapView?.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+//    mapView?.register(ClusterAnnotationView.self,
+//                      forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
   }
 
 }

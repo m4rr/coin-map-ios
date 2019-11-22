@@ -28,7 +28,8 @@ struct MapRepresentable: UIViewControllerRepresentable {
     return MapViewController(coordinator: context.coordinator)
   }
 
-  func updateUIViewController(_ uiViewController: MapViewController, context: UIViewControllerRepresentableContext<MapRepresentable>) {
+  func updateUIViewController(_ uiViewController: MapViewController,
+                              context: UIViewControllerRepresentableContext<MapRepresentable>) {
     //
   }
 
@@ -47,32 +48,34 @@ extension MapRepresentable {
       super.init()
     }
 
-
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-//      (mapView as? MKMapView & CKMap)?.clusterManager.updateClustersIfNeeded()
+    func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+      //
     }
 
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+
+    }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
       var aView: MKAnnotationView?
 
       if let anno = annotation as? MKClusterAnnotation {
-//        a = ClusterAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+        anno.title = nil
+        anno.subtitle = nil
 
-        let a = anno
-        a.title = nil
-        a.subtitle = nil
-
-        aView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier, for: a)
+        aView = mapView.dequeueReusableAnnotationView(
+          withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier,
+          for: anno)
       } else {
-        aView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier, for: annotation)
+        aView = mapView.dequeueReusableAnnotationView(
+          withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier,
+          for: annotation)
       }
 
       return aView
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-
       guard let placeAnno = view.annotation as? UndetailedAnnotation else {
         return
       }
