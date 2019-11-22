@@ -47,26 +47,32 @@ extension MapRepresentable {
       super.init()
     }
 
-//    func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
-//
-//      return ClusterAnnotation(memberAnnotations: memberAnnotations)
-//    }
+
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+//      (mapView as? MKMapView & CKMap)?.clusterManager.updateClustersIfNeeded()
+    }
 
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-      var a: MKAnnotationView?
+      var aView: MKAnnotationView?
 
-      if annotation is MKClusterAnnotation {
+      if let anno = annotation as? MKClusterAnnotation {
 //        a = ClusterAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
-        a = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier, for: annotation)
-      } else  {
-        a = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier, for: annotation)
+
+        let a = anno
+        a.title = nil
+        a.subtitle = nil
+
+        aView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier, for: a)
+      } else {
+        aView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier, for: annotation)
       }
 
-      return a
+      return aView
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+
       guard let placeAnno = view.annotation as? UndetailedAnnotation else {
         return
       }
@@ -78,23 +84,8 @@ extension MapRepresentable {
       parent.website = placeAnno.website
       parent.hours = placeAnno.hours
 
-      guard let controller = controller else { return }
-
-
-      let curplcPairsForThisPlace = controller.currencies_places
-        .filter({ (cp) -> Bool in
-          cp.placeId == placeAnno.placeID
-        })
-
-
-
-      let curs = curplcPairsForThisPlace.flatMap({ cp in
-        controller.currencies.filter { (c) -> Bool in
-          c.id == cp.currencyId
-        }
-      })
-
-      parent.placeCurrencies = curs
+      guard let c = controller else { return }
+      parent.placeCurrencies = c.currenciesFor(placeID: placeAnno.placeID)
 
       parent.selected = true
     }

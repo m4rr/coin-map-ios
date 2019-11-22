@@ -57,6 +57,7 @@ struct ContentView: View {
           VStack(spacing: 8) {
             Text(selectedTitle)
               .font(.system(.headline, design: .rounded))
+              .multilineTextAlignment(.center)
               .frame(minWidth: 0, maxWidth: .infinity)
               .foregroundColor(Color(UIColor.label))
 

@@ -25,13 +25,13 @@ class MapViewController: UIViewController {
 
   var coordinator: MapRepresentable.Coordinator
 
-  var places: [MKAnnotation] = [] {
+  var places: [UndetailedAnnotation] = [] {
     didSet {
       guard Thread.isMainThread else {
         return assertionFailure()
       }
 
-      map?.addAnnotations(places)
+      mapView?.addAnnotations(places)
     }
   }
 
@@ -47,13 +47,32 @@ class MapViewController: UIViewController {
     }
   }
 
+
+  func currenciesFor(placeID: String) -> [Currency] {
+    let curplcPairsForThisPlace = currencies_places
+      .filter({ (cp) -> Bool in
+        cp.placeId == placeID
+      })
+
+
+
+    let curs = curplcPairsForThisPlace.flatMap({ cp in
+      currencies.filter { (c) -> Bool in
+        c.id == cp.currencyId
+      }
+    })
+
+    return curs
+  }
+
+
   override func loadView() {
     let map = MKMapView()
 
     view = map
   }
 
-  var map: MKMapView? {
+  var mapView: MKMapView? {
     return view as? MKMapView
   }
 
@@ -125,19 +144,22 @@ class MapViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    map?.delegate = coordinator
-    map?.mapType = .mutedStandard
+
+    mapView?.delegate = coordinator
+    mapView?.mapType = .mutedStandard
 
     registerAnnotationViewClasses()
 
-    loadPlaces()
     loadCurrencies()
+    loadPlaces()
+
+
   }
 
   private func registerAnnotationViewClasses() {
-    map?.register(BubbleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+    mapView?.register(BubbleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
     
-//    map?.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+//    mapView?.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
   }
 
 }
