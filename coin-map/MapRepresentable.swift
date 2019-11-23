@@ -53,7 +53,7 @@ extension MapRepresentable {
     }
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-
+      //
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -66,31 +66,60 @@ extension MapRepresentable {
         aView = mapView.dequeueReusableAnnotationView(
           withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier,
           for: anno)
+
+        aView?.displayPriority = .required
       } else {
         aView = mapView.dequeueReusableAnnotationView(
           withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier,
           for: annotation)
+
+        aView?.displayPriority = .defaultLow
       }
+
+      aView?.collisionMode = .rectangle
 
       return aView
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-      guard let placeAnno = view.annotation as? UndetailedAnnotation else {
-        return
+      if let placeAnno = view.annotation as? UndetailedAnnotation {
+        parent.title = placeAnno.title ?? ""
+        parent.subtitle = placeAnno.hiddenSubtitle
+
+        parent.phone = placeAnno.phone
+        parent.website = placeAnno.website
+        parent.hours = placeAnno.hours
+
+        guard let c = controller else { return }
+        parent.placeCurrencies = c.currenciesFor(placeID: placeAnno.placeID)
+
+        parent.selected = true
+      } else if let placeAnno = view.annotation as? MKClusterAnnotation {
+
+        let st1 = placeAnno.memberAnnotations
+          .compactMap({ $0.title ?? nil })
+        let st2 = st1
+          .reduce("", { $0 + "• " + $1 + "\n" })
+          .trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        switch placeAnno.memberAnnotations.count {
+        case 0 ... 10:
+          parent.title = ""
+          parent.subtitle = st2
+
+        default:
+          parent.title = placeAnno.memberAnnotations.count.description + " places"
+          parent.subtitle = ""
+        }
+
+        parent.phone = ""
+        parent.website = ""
+        parent.hours = ""
+
+        parent.placeCurrencies = []
+
+        parent.selected = true
       }
-
-      parent.title = placeAnno.title ?? ""
-      parent.subtitle = placeAnno.hiddenSubtitle
-
-      parent.phone = placeAnno.phone
-      parent.website = placeAnno.website
-      parent.hours = placeAnno.hours
-
-      guard let c = controller else { return }
-      parent.placeCurrencies = c.currenciesFor(placeID: placeAnno.placeID)
-
-      parent.selected = true
     }
 
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {

@@ -19,6 +19,13 @@ struct ContentView: View {
 
   @State private var selectedCurrency: [Currency] = []
 
+  private var detailsIsNotEmpty: Bool {
+    return !selectedCurrency.isEmpty || [
+        selectedSubtitle, selectedPhone, selectedWebsite, selectedHours,
+      ]
+      .reduce(false, { $0 || !$1.isEmpty })
+  }
+
   @State private var alert1: Bool = false
   @State private var alert2: Bool = false
 
@@ -55,13 +62,18 @@ struct ContentView: View {
 
         if selected {
           VStack(spacing: 8) {
-            Text(selectedTitle)
-              .font(.system(.headline, design: .rounded))
-              .multilineTextAlignment(.center)
-              .frame(minWidth: 0, maxWidth: .infinity)
-              .foregroundColor(Color(UIColor.label))
 
-            Divider()
+            if !selectedTitle.isEmpty {
+              Text(selectedTitle)
+                .font(.system(.headline, design: .rounded))
+                .multilineTextAlignment(.center)
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .foregroundColor(Color(UIColor.label))
+            }
+
+            if !selectedTitle.isEmpty && detailsIsNotEmpty {
+              Divider()
+            }
 
             if !selectedCurrency.isEmpty {
               Text(selectedCurrency.description)
