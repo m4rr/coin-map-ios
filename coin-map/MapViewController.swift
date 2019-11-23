@@ -158,11 +158,8 @@ class MapViewController: UIViewController {
   }
 
   private func registerAnnotationViewClasses() {
-    mapView?.register(BubbleAnnotationView.self,
-                      forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-    
-//    mapView?.register(ClusterAnnotationView.self,
-//                      forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+    // mapView?.register(BubbleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+    // mapView?.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
   }
 
 }
