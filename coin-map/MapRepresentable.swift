@@ -57,28 +57,45 @@ extension MapRepresentable {
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-      var aView: MKAnnotationView?
 
-      if let anno = annotation as? MKClusterAnnotation {
-        anno.title = nil
-        anno.subtitle = nil
-
-        aView = mapView.dequeueReusableAnnotationView(
+      if let _ = annotation as? MKClusterAnnotation,
+        let clusterView = mapView.dequeueReusableAnnotationView(
           withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier,
-          for: anno)
+          for: annotation) as? MKMarkerAnnotationView {
 
-        aView?.displayPriority = .required
-      } else {
-        aView = mapView.dequeueReusableAnnotationView(
+        // cluster
+
+        clusterView.markerTintColor = .systemBlue
+        clusterView.displayPriority = .required
+
+        clusterView.titleVisibility = .hidden
+        clusterView.subtitleVisibility = .hidden
+
+        clusterView.collisionMode = .rectangle
+        clusterView.clusteringIdentifier = nil
+
+        return clusterView
+
+      } else if let markerView = mapView.dequeueReusableAnnotationView(
           withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier,
-          for: annotation)
+          for: annotation) as? MKMarkerAnnotationView {
 
-        aView?.displayPriority = .defaultLow
+        // not a cluster
+
+        markerView.glyphText = (annotation.title ?? nil)?.first.flatMap(String.init)
+        markerView.displayPriority = .defaultLow
+        markerView.markerTintColor = nil
+
+        markerView.titleVisibility = .visible
+        markerView.subtitleVisibility = .hidden
+
+        markerView.collisionMode = .rectangle
+        markerView.clusteringIdentifier = "clustering"
+
+        return markerView
       }
 
-      aView?.collisionMode = .rectangle
-
-      return aView
+      return nil
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -96,21 +113,30 @@ extension MapRepresentable {
         parent.placeCurrencies = c.currenciesFor(placeID: placeAnno.placeID)
 
         parent.selected = true
+
       } else if let placeAnno = view.annotation as? MKClusterAnnotation {
 
-        let st1 = placeAnno.memberAnnotations
-          .compactMap({ $0.title ?? nil })
-        let st2 = st1
-          .reduce("", { $0 + "• " + $1 + "\n" })
-          .trimmingCharacters(in: .whitespacesAndNewlines)
-        
+        parent.title = placeAnno.memberAnnotations.count.description + " places"
+
         switch placeAnno.memberAnnotations.count {
         case 0 ... 10:
-          parent.title = ""
+          let st1 = placeAnno.memberAnnotations
+            .compactMap({ $0.title ?? nil })
+            .map({ "• " + $0 })
+
+          let st2 = st1
+            .joined(separator: "\n")
+
           parent.subtitle = st2
 
+        case 11 ... 20:
+          let st1 = placeAnno.memberAnnotations
+            .compactMap({ $0.title ?? nil })
+            .joined(separator: " • ")
+
+          parent.subtitle = st1
+
         default:
-          parent.title = placeAnno.memberAnnotations.count.description + " places"
           parent.subtitle = ""
         }
 
@@ -121,7 +147,9 @@ extension MapRepresentable {
         parent.placeCurrencies = []
 
         parent.selected = true
+
       }
+
     }
 
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
