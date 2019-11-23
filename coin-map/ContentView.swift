@@ -29,6 +29,14 @@ struct ContentView: View {
   @State private var alert1: Bool = false
   @State private var alert2: Bool = false
 
+  var edgeSet: Edge.Set {
+    #if targetEnvironment(macCatalyst)
+    return .all
+    #else
+    return [.top, .leading, .trailing]
+    #endif
+  }
+
   var body: some View {
     ZStack {
       MapRepresentable(selected: $selected,
@@ -152,9 +160,8 @@ struct ContentView: View {
           )
         }
       }
-      .padding([.top, .leading, .trailing])
+      .padding(edgeSet)
     }
-
   }
 }
 
