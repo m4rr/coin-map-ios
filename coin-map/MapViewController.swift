@@ -25,7 +25,7 @@ class MapViewController: UIViewController {
 
   var coordinator: MapRepresentable.Coordinator
 
-  var places: [UndetailedAnnotation] = [] {
+  var places: [DetailedAnnotation] = [] {
     didSet {
       guard Thread.isMainThread else {
         return assertionFailure()
@@ -118,14 +118,18 @@ class MapViewController: UIViewController {
     DispatchQueue.global().async {
       let places: [Place] = self.loadItems(filename: "places")
 
-      let annotations = places.compactMap { (place) -> UndetailedAnnotation? in
+      let annotations = places.compactMap { (place) -> DetailedAnnotation? in
         guard place.visible else {
           return nil
         }
 
+//        if place.categoryId.isEmpty {
+//          return nil
+//        }
+
         let coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
 
-        return UndetailedAnnotation(coordinate,
+        return DetailedAnnotation(coordinate,
                                     title: place.name,
                                     subtitle: place.description,
                                     phone: place.phone,

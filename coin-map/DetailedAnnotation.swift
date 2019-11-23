@@ -8,21 +8,21 @@
 
 import MapKit
 
-class BubbleAnnotationView: MKMarkerAnnotationView {
+//class BubbleAnnotationView: MKMarkerAnnotationView {
+//
+//  override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+//    super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+//
+//    clusteringIdentifier = "clustering"
+//  }
+//
+//  required init?(coder aDecoder: NSCoder) {
+//    fatalError("init(coder:) has not been implemented")
+//  }
+//
+//}
 
-  override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
-    super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-
-    clusteringIdentifier = "clustering"
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-}
-
-class UndetailedAnnotation: NSObject, MKAnnotation {
+class DetailedAnnotation: NSObject, MKAnnotation {
 
   let title, subtitle: String?
   let coordinate: CLLocationCoordinate2D

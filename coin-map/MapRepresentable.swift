@@ -82,7 +82,9 @@ extension MapRepresentable {
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-      if let placeAnno = view.annotation as? UndetailedAnnotation {
+
+      if let placeAnno = view.annotation as? DetailedAnnotation {
+
         parent.title = placeAnno.title ?? ""
         parent.subtitle = placeAnno.hiddenSubtitle
 

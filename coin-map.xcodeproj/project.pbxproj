@@ -18,7 +18,7 @@
 		037B244E238682F200C404B7 /* ClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037B244D238682F200C404B7 /* ClusterAnnotationView.swift */; };
 		037B24502386830800C404B7 /* UIColor+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037B244F2386830800C404B7 /* UIColor+Theme.swift */; };
 		037B245223868F5400C404B7 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037B245123868F5400C404B7 /* MapViewController.swift */; };
-		037B245423868F7500C404B7 /* UndetailedAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037B245323868F7500C404B7 /* UndetailedAnnotation.swift */; };
+		037B245423868F7500C404B7 /* DetailedAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037B245323868F7500C404B7 /* DetailedAnnotation.swift */; };
 		03AC067323864AB50017D8F0 /* currencies.json in Resources */ = {isa = PBXBuildFile; fileRef = 03AC067123864AB50017D8F0 /* currencies.json */; };
 		03AC067423864AB50017D8F0 /* currencies_places.json in Resources */ = {isa = PBXBuildFile; fileRef = 03AC067223864AB50017D8F0 /* currencies_places.json */; };
 		03B197F72382547F00FE25F5 /* places.json in Resources */ = {isa = PBXBuildFile; fileRef = 03B197F62382547E00FE25F5 /* places.json */; };
@@ -39,7 +39,7 @@
 		037B244D238682F200C404B7 /* ClusterAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClusterAnnotationView.swift; sourceTree = "<group>"; };
 		037B244F2386830800C404B7 /* UIColor+Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Theme.swift"; sourceTree = "<group>"; };
 		037B245123868F5400C404B7 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		037B245323868F7500C404B7 /* UndetailedAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndetailedAnnotation.swift; sourceTree = "<group>"; };
+		037B245323868F7500C404B7 /* DetailedAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedAnnotation.swift; sourceTree = "<group>"; };
 		03AC067123864AB50017D8F0 /* currencies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = currencies.json; sourceTree = SOURCE_ROOT; };
 		03AC067223864AB50017D8F0 /* currencies_places.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = currencies_places.json; sourceTree = SOURCE_ROOT; };
 		03B197F62382547E00FE25F5 /* places.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = places.json; sourceTree = SOURCE_ROOT; };
@@ -93,7 +93,7 @@
 				030F35F3238018910014F857 /* ContentView.swift */,
 				03C002EA23802AB3001339A5 /* MapRepresentable.swift */,
 				037B245123868F5400C404B7 /* MapViewController.swift */,
-				037B245323868F7500C404B7 /* UndetailedAnnotation.swift */,
+				037B245323868F7500C404B7 /* DetailedAnnotation.swift */,
 				037B244D238682F200C404B7 /* ClusterAnnotationView.swift */,
 				030F360323801C740014F857 /* API.swift */,
 				03B197F62382547E00FE25F5 /* places.json */,
@@ -196,7 +196,7 @@
 				037B245223868F5400C404B7 /* MapViewController.swift in Sources */,
 				030F360423801C740014F857 /* API.swift in Sources */,
 				037B244E238682F200C404B7 /* ClusterAnnotationView.swift in Sources */,
-				037B245423868F7500C404B7 /* UndetailedAnnotation.swift in Sources */,
+				037B245423868F7500C404B7 /* DetailedAnnotation.swift in Sources */,
 				037B24502386830800C404B7 /* UIColor+Theme.swift in Sources */,
 				030F35F4238018910014F857 /* ContentView.swift in Sources */,
 			);
@@ -337,7 +337,7 @@
 				CODE_SIGN_ENTITLEMENTS = "coin-map/coin-map.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 14;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"coin-map/Preview Content\"";
 				DEVELOPMENT_TEAM = Y5P7AX9UM2;
@@ -362,7 +362,7 @@
 				CODE_SIGN_ENTITLEMENTS = "coin-map/coin-map.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 14;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"coin-map/Preview Content\"";
 				DEVELOPMENT_TEAM = Y5P7AX9UM2;
