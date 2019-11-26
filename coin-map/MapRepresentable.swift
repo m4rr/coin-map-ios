@@ -58,42 +58,83 @@ extension MapRepresentable {
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 
-      if let _ = annotation as? MKClusterAnnotation,
-        let clusterView = mapView.dequeueReusableAnnotationView(
-          withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier,
-          for: annotation) as? MKMarkerAnnotationView {
+      if let _ = annotation as? MKClusterAnnotation {
 
         // cluster
 
-        clusterView.markerTintColor = .systemBlue
-        clusterView.displayPriority = .required
-
-        clusterView.titleVisibility = .hidden
-        clusterView.subtitleVisibility = .hidden
-
-        clusterView.collisionMode = .rectangle
-        clusterView.clusteringIdentifier = nil
-
-        return clusterView
-
-      } else if let markerView = mapView.dequeueReusableAnnotationView(
-          withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier,
+        if let clusterView = mapView.dequeueReusableAnnotationView(
+          withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier,
           for: annotation) as? MKMarkerAnnotationView {
+
+          // cluster @ iOS
+
+          clusterView.markerTintColor = .systemBlue
+          clusterView.displayPriority = .required
+
+          clusterView.titleVisibility = .hidden
+          clusterView.subtitleVisibility = .hidden
+
+          clusterView.collisionMode = .rectangle
+          clusterView.clusteringIdentifier = nil
+
+          return clusterView
+
+        } else if let clusterView = mapView.dequeueReusableAnnotationView(
+          withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier,
+          for: annotation) as? MKPinAnnotationView {
+
+          // cluster @ macOS
+
+          clusterView.pinTintColor = MKPinAnnotationView.purplePinColor()
+
+          clusterView.collisionMode = .rectangle
+          clusterView.clusteringIdentifier = nil
+
+          return clusterView
+
+        }
+
+      } else {
 
         // not a cluster
 
-        markerView.glyphText = (annotation.title ?? nil)?.first.flatMap(String.init)
-        markerView.displayPriority = .defaultLow
-        markerView.markerTintColor = nil
+        if let markerView = mapView.dequeueReusableAnnotationView(
+          withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier,
+          for: annotation) as? MKMarkerAnnotationView {
 
-        markerView.titleVisibility = .visible
-        markerView.subtitleVisibility = .hidden
+          // not a cluster @ iOS
 
-        markerView.collisionMode = .rectangle
-        markerView.clusteringIdentifier = "clustering"
+          markerView.glyphText = (annotation.title ?? nil)?.first.flatMap(String.init)
+          markerView.displayPriority = .defaultLow
+          markerView.markerTintColor = nil
 
-        return markerView
+          markerView.titleVisibility = .visible
+          markerView.subtitleVisibility = .hidden
+
+          markerView.collisionMode = .rectangle
+          markerView.clusteringIdentifier = "clustering"
+
+          return markerView
+
+        } else if let pinView = mapView.dequeueReusableAnnotationView(
+          withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier,
+          for: annotation) as? MKPinAnnotationView {
+
+          // not a cluster @ macOS
+
+          pinView.displayPriority = .defaultLow
+          pinView.pinTintColor = MKPinAnnotationView.redPinColor()
+
+          pinView.collisionMode = .rectangle
+          pinView.clusteringIdentifier = "clustering"
+
+          return pinView
+
+        }
+
       }
+
+      assertionFailure()
 
       return nil
     }
