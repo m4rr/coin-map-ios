@@ -109,57 +109,43 @@ struct ContentView: View {
               }
 
               if !self.selectedPhone.isEmpty {
-                Button(action: {
-                  self.alert1.toggle()
-                }, label: {
+                Button(action: { self.alert1.toggle() }) {
                   Text(self.selectedPhone)
-                })
-
-                  .popSheet(isPresented: self.$alert1, arrowEdge: .bottom, content: { () -> PopSheet in
-
-
-                    PopSheet(title: Text("Call Number"), message: Text(self.selectedPhone), buttons: <#T##[PopSheet.Button]#>)
-
-
-//                  .actionSheet(isPresented: self.$alert1) {
-                    ActionSheet(
-                      title: ,
-                      message: ,
-                      buttons: [
-                        Alert.Button.default(Text("Call")) {
-                          if let phone = URL(string: "tel:" + self.selectedPhone.trimmingCharacters(in: .whitespaces)) {
-                            UIApplication.shared.open(phone, options: [:], completionHandler: nil)
-                          }
-                        },
-                        Alert.Button.default(Text("Copy")) {
-                          UIPasteboard.general.string = self.selectedPhone
-                        },
-                        Alert.Button.cancel(),
-                      ]
-                    )
+                }
+                .popSheet(isPresented: self.$alert1, arrowEdge: .bottom) {
+                  PopSheet(
+                    title: Text("Call Number"),
+                    message: Text(self.selectedPhone),
+                    buttons: [
+                      .default(Text("Call")) {
+                        if let phone = URL(string: "tel:" + self.selectedPhone.trimmingCharacters(in: .whitespaces)) {
+                          UIApplication.shared.open(phone, options: [:], completionHandler: nil)
+                        }
+                      },
+                      .default(Text("Copy")) {
+                        UIPasteboard.general.string = self.selectedPhone
+                      },
+                      .cancel(),
+                  ])
                 }
               }
 
               if !self.selectedWebsite.isEmpty {
-                Button(action: {
-                  self.alert2.toggle()
-                }, label: {
-                  Text(self.selectedWebsite)
-                })
-                  .actionSheet(isPresented: self.$alert2) {
-                    ActionSheet(
+                Button(action: { self.alert2.toggle() }) { Text(self.selectedWebsite) }
+                  .popSheet(isPresented: self.$alert2, arrowEdge: .bottom) {
+                    PopSheet(
                       title: Text("Open In Safari"),
                       message: Text(self.selectedWebsite),
                       buttons: [
-                        Alert.Button.default(Text("Open"), action: {
+                        .default(Text("Open"), action: {
                           if let url = URL(string: self.selectedWebsite) {
                             UIApplication.shared.open(url, options: [:], completionHandler: nil)
                           }
                         }),
-                        Alert.Button.default(Text("Copy")) {
+                        .default(Text("Copy")) {
                           UIPasteboard.general.string = self.selectedWebsite
                         },
-                        Alert.Button.cancel(),
+                        .cancel(),
                       ]
                     )
                 }
