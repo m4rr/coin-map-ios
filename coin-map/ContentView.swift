@@ -62,21 +62,23 @@ struct ContentView: View {
           .edgesIgnoringSafeArea(.all)
 
         VStack {
-          HStack {
-            Spacer()
 
-            Button(action: {
-              //
-            }) {
-              Text("i")
-                .font(.system(.headline, design: .monospaced))
-                .foregroundColor(.white)
-            }
-            .frame(width: 40, height: 40)
-            .background(LinearGradient(gradient: Gradient(colors: [.red, .blue]),
-                                       startPoint: .leading, endPoint: .trailing))
-              .cornerRadius(40)
-          }
+          // "i"
+//          HStack {
+//            Spacer()
+//
+//            Button(action: {
+//              //
+//            }) {
+//              Text("i")
+//                .font(.system(.headline, design: .monospaced))
+//                .foregroundColor(.white)
+//            }
+//            .frame(width: 40, height: 40)
+//            .background(LinearGradient(gradient: Gradient(colors: [.red, .blue]),
+//                                       startPoint: .leading, endPoint: .trailing))
+//              .cornerRadius(40)
+//          }
 
 
           Spacer() // here we see the map
