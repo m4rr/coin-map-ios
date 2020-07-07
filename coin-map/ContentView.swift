@@ -28,6 +28,7 @@ struct ContentView: View {
 
   @State private var alert1: Bool = false
   @State private var alert2: Bool = false
+  @State private var detailsPresented: Bool = false
 
   func paddingEdges(insets: EdgeInsets) -> Edge.Set {
     if insets.bottom.isZero {
@@ -64,21 +65,24 @@ struct ContentView: View {
         VStack {
 
           // "i"
-//          HStack {
-//            Spacer()
-//
-//            Button(action: {
-//              //
-//            }) {
-//              Text("i")
-//                .font(.system(.headline, design: .monospaced))
-//                .foregroundColor(.white)
-//            }
-//            .frame(width: 40, height: 40)
-//            .background(LinearGradient(gradient: Gradient(colors: [.red, .blue]),
-//                                       startPoint: .leading, endPoint: .trailing))
-//              .cornerRadius(40)
-//          }
+          HStack {
+
+            Button {
+              detailsPresented.toggle()
+            } label: {
+              Text("i")
+                .font(.system(.headline, design: .monospaced))
+                .foregroundColor(.white)
+                .frame(width: 40, height: 40)
+            }
+            .background(LinearGradient(gradient: Gradient(colors: [.red, .blue]),
+                                       startPoint: .leading, endPoint: .trailing))
+            .cornerRadius(40)
+            .sheet(isPresented: $detailsPresented) {
+              PrivacyPolicyView(detailsPresented: $detailsPresented)
+            }
+          }
+          .frame(maxWidth: .infinity, alignment: .topTrailing)
 
 
           Spacer() // here we see the map
